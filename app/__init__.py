@@ -1,4 +1,5 @@
 """A simple flask web app"""
+
 import flask_login
 import os
 import datetime
@@ -7,7 +8,7 @@ import time
 from flask import g, request
 from rfc3339 import rfc3339
 
-from flask import render_template, Flask, has_request_context, request
+from flask import render_template, Flask, has_request_context
 from flask_bootstrap import Bootstrap5
 from flask_wtf.csrf import CSRFProtect
 
@@ -34,6 +35,11 @@ class RequestFormatter(logging.Formatter):
         if has_request_context():
             record.url = request.url
             record.remote_addr = request.remote_addr
+            record.request_method = request.method
+            record.request_path = request.path
+            record.status = response.status_code
+            record.ip = request.headers.get('X - Forwarded - For', request.remote_addr)
+            record.host = request.host.split(':', 1)[0]
         else:
             record.url = None
             record.remote_addr = None
@@ -78,8 +84,8 @@ def create_app():
     handler = logging.FileHandler(log_file)
     # Create a log file formatter object to create the entry in the log
     formatter = RequestFormatter(
-        '[%(asctime)s] %(remote_addr)s requested %(url)s\n'
-        '%(levelname)s in %(module)s: %(message)s'
+        '%(levelname)s, %(asctime)s, %(module)s, %(message)s, %(remote_addr)s, '
+        'requested %(url)s ,%(request_method)s, %(ip)s, %(host)s, %(request_path)s \n'
     )
     # set the formatter for the log entry
     handler.setFormatter(formatter)
@@ -106,18 +112,12 @@ def create_app():
         dt = datetime.datetime.fromtimestamp(now)
         timestamp = rfc3339(dt, utc=True)
 
-        ip = request.headers.get('X-Forwarded-For', request.remote_addr)
         host = request.host.split(':', 1)[0]
         args = dict(request.args)
 
         log_params = [
-            ('method', request.method),
-            ('path', request.path),
-            ('status', response.status_code),
             ('duration', duration),
             ('time', timestamp),
-            ('ip', ip),
-            ('host', host),
             ('params', args)
         ]
 
@@ -130,7 +130,7 @@ def create_app():
             part = name + ': ' + str(value) + ', '
             parts.append(part)
         line = " ".join(parts)
-        #this triggers a log entry to be created with whatever is in the line variable
+        # this triggers a log entry to be created with whatever is in the line variable
         app.logger.info('this is the plain message')
 
         return response
