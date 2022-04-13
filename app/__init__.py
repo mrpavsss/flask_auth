@@ -20,31 +20,15 @@ from app.db import db
 from app.db.models import User
 from app.exceptions import http_exceptions
 from app.simple_pages import simple_pages
+from app.log_formatters import RequestFormatter
 import logging
 from flask.logging import default_handler
 
 login_manager = flask_login.LoginManager()
 
-
 def page_not_found(e):
     return render_template("404.html"), 404
 
-
-class RequestFormatter(logging.Formatter):
-    def format(self, record):
-        if has_request_context():
-            record.url = request.url
-            record.remote_addr = request.remote_addr
-            record.request_method = request.method
-            record.request_path = request.path
-            record.status = response.status_code
-            record.ip = request.headers.get('X - Forwarded - For', request.remote_addr)
-            record.host = request.host.split(':', 1)[0]
-        else:
-            record.url = None
-            record.remote_addr = None
-
-        return super().format(record)
 
 
 def create_app():
@@ -106,16 +90,20 @@ def create_app():
             return response
         elif request.path.startswith('/bootstrap'):
             return response
+        app.logger.info("none")
+
 
         now = time.time()
         duration = round(now - g.start, 2)
         dt = datetime.datetime.fromtimestamp(now)
         timestamp = rfc3339(dt, utc=True)
 
+        ip = request.headers.get('X-Forwarded-For', request.remote_addr)
         host = request.host.split(':', 1)[0]
         args = dict(request.args)
 
         log_params = [
+            ('status', response.status_code),
             ('duration', duration),
             ('time', timestamp),
             ('params', args)
@@ -130,13 +118,10 @@ def create_app():
             part = name + ': ' + str(value) + ', '
             parts.append(part)
         line = " ".join(parts)
-        # this triggers a log entry to be created with whatever is in the line variable
+        #this triggers a log entry to be created with whatever is in the line variable
         app.logger.info('this is the plain message')
-
         return response
-
     return app
-
 
 @login_manager.user_loader
 def user_loader(user_id):
