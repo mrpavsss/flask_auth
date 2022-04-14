@@ -14,7 +14,7 @@ log_con = flask.Blueprint('log_con', __name__)
 def before_request_logging():
     current_app.logger.info("Before Request")
     log = logging.getLogger("myApp")
-    log.info("My App Logger")
+    log.info("Pavs' App Logger")
 
 
 @log_con.after_app_request
