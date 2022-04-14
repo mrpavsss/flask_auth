@@ -27,18 +27,18 @@ def after_request_logging(response):
         return response
     current_app.logger.info("After Request")
 
-    log = logging.getLogger("myApp")
-    log.info("My App Logger")
+    log = logging.getLogger("Pavs' App")
+    log.info("Pavs' App Logger")
     return response
 
 
 @log_con.before_app_first_request
 def configure_logging():
     logging.config.dictConfig(LOGGING_CONFIG)
-    log = logging.getLogger("myApp")
-    log.info("My App Logger")
+    log = logging.getLogger("Pavs' App")
+    log.info("Pavs' App Logger")
     log = logging.getLogger("myerrors")
-    log.info("THis broke")
+    log.info("This broke")
 
 
 
