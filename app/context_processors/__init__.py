@@ -4,7 +4,7 @@ from app.auth.forms import login_form
 
 
 def utility_text_processors():
-    message = "hello world"
+    message = "Hello World"
     form = login_form()
 
     def deployment_environment():
