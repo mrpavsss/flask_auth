@@ -1,20 +1,29 @@
-"""This file checks to see if logs directory was created in the click test"""
-
+"""Let's see some results"""
 import os
 
 from click.testing import CliRunner
 
-from app import create_log_folder
+from app import create_log_folder, create_database
 
 runner = CliRunner()
 
 
-def test_add():
-    """THis checks logs folder creation"""
+def test_create_log_folder():
+    """logs"""
     response = runner.invoke(create_log_folder)
     assert response.exit_code == 0
     root = os.path.dirname(os.path.abspath(__file__))
     # set the name of the apps log folder to logs
-    logdir = os.path.join(root, '../logs')
+    logdir = os.path.join(root, '../app/logs')
     # make a directory if it doesn't exist
-    assert os.path.exists(logdir) == False
+    assert os.path.exists(logdir) == True
+
+def test_create_database():
+    """database"""
+    response = runner.invoke(create_database)
+    assert response.exit_code == 0
+    root = os.path.dirname(os.path.abspath(__file__))
+    # set the name of the apps log folder to logs
+    dbdir = os.path.join(root, '../database')
+    # make a directory if it doesn't exist
+    assert os.path.exists(dbdir) == True
