@@ -11,12 +11,12 @@ def test_adding_user(application):
 
         assert db.session.query(User).count() == 0
         assert db.session.query(Song).count() == 0
-        user = User('keith@webizly.com', 'testtest')
+        user = User('pr253@njit.edu', 'testtest')
         db.session.add(user)
         db.session.commit()
         assert db.session.query(User).count() == 1
-        user = User.query.filter_by(email='keith@webizly.com').first()
-        assert user.email == 'keith@webizly.com'
+        user = User.query.filter_by(email='pr253@njit.edu').first()
+        assert user.email == 'pr253@njit.edu'
         user.songs= [Song("test")]
         db.session.commit()
         assert db.session.query(Song).count() == 1
