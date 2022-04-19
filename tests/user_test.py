@@ -1,14 +1,11 @@
+"""Testing db stuffs"""
+from faker import Faker
 from app import db
 from app.db.models import User, Song
-from faker import Faker
 
 def test_adding_user(application):
+    """test to see new user"""
     with application.app_context():
-        Faker.seed(4321)
-        fake = Faker()
-        for _ in range(10):
-            print(fake.email())
-
         assert db.session.query(User).count() == 0
         assert db.session.query(Song).count() == 0
         user = User('pr253@njit.edu', 'testtest')
@@ -29,7 +26,3 @@ def test_adding_user(application):
         db.session.delete(user)
         assert db.session.query(User).count() == 0
         assert db.session.query(Song).count() == 0
-
-
-
-
