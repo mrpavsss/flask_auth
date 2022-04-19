@@ -1,4 +1,3 @@
-"""Let's see some results"""
 import os
 
 from click.testing import CliRunner
@@ -9,17 +8,15 @@ runner = CliRunner()
 
 
 def test_create_log_folder():
-    """logs"""
     response = runner.invoke(create_log_folder)
     assert response.exit_code == 0
     root = os.path.dirname(os.path.abspath(__file__))
     # set the name of the apps log folder to logs
-    logdir = os.path.join(root, '../app/logs')
+    logdir = os.path.join(root, '../logs')
     # make a directory if it doesn't exist
     assert os.path.exists(logdir) == True
 
 def test_create_database():
-    """database"""
     response = runner.invoke(create_database)
     assert response.exit_code == 0
     root = os.path.dirname(os.path.abspath(__file__))
