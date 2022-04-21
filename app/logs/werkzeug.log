@@ -1,3 +1,6 @@
 2022-04-15 19:19:56,381 [INFO] werkzeug: 192.168.160.1 - - [15/Apr/2022 19:19:56] "GET / HTTP/1.1" 200 -
 2022-04-15 19:19:59,528 [INFO] werkzeug: 192.168.160.1 - - [15/Apr/2022 19:19:59] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
 2022-04-16 04:33:55,797 [INFO] werkzeug: 172.24.0.1 - - [16/Apr/2022 04:33:55] "GET / HTTP/1.1" 200 -
+2022-04-21 15:10:15,984 [INFO] werkzeug: 172.25.0.1 - - [21/Apr/2022 15:10:15] "GET / HTTP/1.1" 200 -
+2022-04-21 15:10:16,441 [INFO] werkzeug: 172.25.0.1 - - [21/Apr/2022 15:10:16] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2022-04-21 15:21:58,274 [INFO] werkzeug:  * Detected change in '/home/myuser/tests/config_test.py', reloading
