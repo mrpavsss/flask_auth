@@ -1,7 +1,7 @@
 """testing users"""
 import logging
 
-from faker import Faker
+#from faker import Faker
 from app import db
 from app.db.models import User, Song
 
