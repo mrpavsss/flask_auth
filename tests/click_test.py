@@ -1,3 +1,4 @@
+"""click test"""
 import logging
 import os
 
@@ -11,10 +12,11 @@ runner = CliRunner()
 
 
 def test_create_database():
+    """creating db test"""
     response = runner.invoke(create_database)
     assert response.exit_code == 0
     root = os.path.dirname(os.path.abspath(__file__))
     # set the name of the apps log folder to logs
     dbdir = os.path.join(root, '../database')
     # make a directory if it doesn't exist
-    assert os.path.exists(dbdir) == True
+    assert os.path.exists(dbdir) is True

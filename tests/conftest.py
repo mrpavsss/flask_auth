@@ -29,6 +29,7 @@ def application():
 
 @pytest.fixture()
 def add_user(application):
+    """adding user"""
     with application.app_context():
         #new record
         user = User('keith@webizly.com', 'testtest')
