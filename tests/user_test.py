@@ -13,7 +13,7 @@ def test_adding_user(application):
         assert db.session.query(Song).count() == 0
         #showing how to add a record
         #create a record
-        user = User('keith@webizly.com', 'testtest')
+        user = User('keith@webizly.com', 'testtest', is_admin=True)
         #add it to get ready to be committed
         db.session.add(user)
         #call the commit
