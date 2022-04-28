@@ -31,9 +31,10 @@ def register():
                 db.session.add(user)
                 db.session.commit()
 
-            msg = Message("Hello",
+            msg = Message("Welcome to the site",
                           sender="from@example.com",
-                          recipients=["to@example.com"])
+                          recipients=[user.email])
+            msg.body = "Welcome to the site"
 
             current_app.mail.send(msg)
             flash('Congratulations, you are now a registered user!', "success")
@@ -93,7 +94,7 @@ def dashboard(page):
 
     #pagination = User.query.join(location_user).filter(location_user.user_id == current_user.id).paginate()
 
-    data = Location.query.all()
+    data = current_user.locations
 
     try:
         return render_template('dashboard.html',data=data)
