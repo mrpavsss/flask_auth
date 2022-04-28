@@ -12,10 +12,7 @@ location_user = db.Table('location_user', db.Model.metadata,
     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
     db.Column('location_id', db.Integer, db.ForeignKey('locations.id'))
 )
-song_user = db.Table('song_user', db.Model.metadata,
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('song_id', db.Integer, db.ForeignKey('songs.id'))
-)
+
 
 
 class Song(db.Model,SerializerMixin):
