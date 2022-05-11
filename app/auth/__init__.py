@@ -94,12 +94,18 @@ def dashboard(page):
 
     #pagination = User.query.join(location_user).filter(location_user.user_id == current_user.id).paginate()
 
-    data = current_user.locations
+    data = current_user.songs
 
-    try:
-        return render_template('dashboard.html',data=data)
-    except TemplateNotFound:
-        abort(404)
+    if len(current_user.songs) != 0:
+        try:
+            return render_template('dashboard.html', data=data)
+        except TemplateNotFound:
+            abort(404)
+    else:
+        try:
+            return render_template('dashboard.html')
+        except TemplateNotFound:
+            abort(404)
 
 @auth.route('/profile', methods=['POST', 'GET'])
 def edit_profile():
